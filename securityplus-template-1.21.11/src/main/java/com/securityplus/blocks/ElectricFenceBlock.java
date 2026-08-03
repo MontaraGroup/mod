@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -28,10 +29,9 @@ public class ElectricFenceBlock extends Block {
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (!world.isClient && entity instanceof LivingEntity livingEntity) {
-            livingEntity.damage(world.getDamageSources().lightningBolt(), 2.0F);
+        if (!world.isClient() && world instanceof ServerWorld serverWorld && entity instanceof LivingEntity livingEntity) {
+            livingEntity.damage(serverWorld, world.getDamageSources().lightningBolt(), 2.0F);
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 60, 0));
         }
-        super.onEntityCollision(state, world, pos, entity);
     }
 }
