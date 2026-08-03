@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "powered=false": { "model": "minecraft:block/lever" },
+    "powered=true": { "model": "minecraft:block/lever_on" }
+  }
+}

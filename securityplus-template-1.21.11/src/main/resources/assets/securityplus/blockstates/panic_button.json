@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "powered=false": { "model": "minecraft:block/stone_button" },
+    "powered=true": { "model": "minecraft:block/stone_button_pressed" }
+  }
+}

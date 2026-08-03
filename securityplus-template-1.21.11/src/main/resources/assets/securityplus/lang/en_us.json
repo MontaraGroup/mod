@@ -1,0 +1,23 @@
+{
+  "itemGroup.securityplus": "SecurityCraft & Lockdown System",
+  "block.securityplus.sentry_turret": "Automated Sentry Turret",
+  "block.securityplus.disruptable_redstone": "Disruptable Redstone Wire",
+  "block.securityplus.lockdown_lever": "Facility Lockdown Lever",
+  "block.securityplus.panic_button": "Emergency Panic Button",
+  "block.securityplus.lockdown_door": "Reinforced Lockdown Door",
+  "block.securityplus.lockdown_shutter": "Reinforced Lockdown Shutter",
+  "block.securityplus.lockdown_wall": "Blastproof Lockdown Wall",
+  "block.securityplus.motion_sensor": "Motion Sensor",
+  "block.securityplus.electric_fence": "Electric Fence",
+  "block.securityplus.alarm_siren": "Alarm Siren",
+  "block.securityplus.laser_grid": "Laser Grid Node",
+  "block.securityplus.spike_trap": "Hidden Spike Trap",
+  "block.securityplus.keypad": "Passcode Keypad",
+  "block.securityplus.retinal_scanner": "Biometric Retinal Scanner",
+  "block.securityplus.reinforced_stone": "Reinforced Stone",
+  "block.securityplus.reinforced_obsidian": "Reinforced Obsidian",
+  "block.securityplus.reinforced_iron_bars": "Reinforced Iron Bars",
+  "item.securityplus.universal_block_remover": "Universal Block Remover",
+  "item.securityplus.universal_owner_changer": "Universal Owner Changer",
+  "item.securityplus.codebreaker": "Passcode Codebreaker"
+}

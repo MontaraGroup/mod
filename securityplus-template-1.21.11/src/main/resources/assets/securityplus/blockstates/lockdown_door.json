@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "open=false": { "model": "minecraft:block/iron_door_bottom" },
+    "open=true": { "model": "minecraft:block/iron_door_top" }
+  }
+}

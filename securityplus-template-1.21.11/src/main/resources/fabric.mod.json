@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "securityplus",
+  "version": "1.0.0",
+  "name": "SecurityPlus (Full SecurityCraft Engine)",
+  "description": "Full SecurityCraft engine with Reinforced Blocks, Keypads, Biometric Retinal Scanners, Facility Lockdown System, and Sentry Turrets for Fabric 1.21.11.",
+  "authors": [
+    "DeepMind Security Team"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/securityplus/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.securityplus.SecurityPlus"
+    ],
+    "modmenu": [
+      "com.securityplus.client.ModMenuIntegration"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~1.21.11"
+  }
+}
