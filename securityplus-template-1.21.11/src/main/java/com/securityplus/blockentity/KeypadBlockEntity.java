@@ -1,40 +1,40 @@
 package com.securityplus.blockentity;
 
 import com.securityplus.init.ModBlockEntities;
-import net.minecraft.class_2338;
-import net.minecraft.class_2487;
-import net.minecraft.class_2680;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.math.BlockPos;
 
 public class KeypadBlockEntity extends OwnableBlockEntity {
-   private String passcode = "1234";
+    private String passcode = "";
 
-   public KeypadBlockEntity(class_2338 var1, class_2680 var2) {
-      super(ModBlockEntities.KEYPAD_BLOCK_ENTITY, var1, var2);
-   }
+    public KeypadBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlockEntities.KEYPAD_BLOCK_ENTITY, pos, state);
+    }
 
-   public void setPasscode(String var1) {
-      this.passcode = var1 != null ? var1 : "";
-      this.setChanged();
-   }
+    public String getPasscode() {
+        return passcode;
+    }
 
-   public String getPasscode() {
-      return this.passcode;
-   }
+    public void setPasscode(String passcode) {
+        this.passcode = passcode;
+        this.markDirty();
+    }
 
-   public boolean verifyPasscode(String var1) {
-      return this.passcode.equals(var1);
-   }
+    @Override
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.readNbt(nbt, registries);
+        if (nbt.contains("Passcode")) {
+            this.passcode = nbt.getString("Passcode");
+        }
+    }
 
-   public void load(class_2487 var1) {
-      super.load(var1);
-      if (var1.contains("Passcode")) {
-         this.passcode = var1.getString("Passcode");
-      }
-
-   }
-
-   protected void saveAdditional(class_2487 var1) {
-      super.saveAdditional(var1);
-      var1.putString("Passcode", this.passcode);
-   }
+    @Override
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.writeNbt(nbt, registries);
+        if (this.passcode != null) {
+            nbt.putString("Passcode", this.passcode);
+        }
+    }
 }
