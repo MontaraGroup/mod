@@ -9,7 +9,11 @@ group = project.maven_group
 repositories {
 	maven {
 		name = "TerraformersMC"
-		url = "https://maven.terraformersmc.com/releases/"
+		url = "https://maven.terraformersmc.com/"
+	}
+	maven {
+		name = "Modrinth"
+		url = "https://api.modrinth.com/maven"
 	}
 }
 
@@ -25,7 +29,7 @@ dependencies {
 	// Fabric API
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	// ModMenu (Hardcoded version to avoid missing property errors in gradle.properties)
+	// ModMenu (Hardcoded version to avoid missing property errors)
 	modCompileOnly "com.terraformersmc:modmenu:11.0.1"
 }
 
