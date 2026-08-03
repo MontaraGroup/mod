@@ -7,10 +7,7 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven {
-		name = "TerraformersMC"
-		url = "https://maven.terraformersmc.com/"
-	}
+	// Modrinth Maven CDN (bypasses TerraformersMC timeouts)
 	maven {
 		name = "Modrinth"
 		url = "https://api.modrinth.com/maven"
@@ -24,13 +21,13 @@ dependencies {
 	// SWITCHED TO FABRIC YARN MAPPINGS:
 	mappings "net.fabricmc:yarn:${project.minecraft_version}+build.1:v2"
 	
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation "net.fabricmc.fabric-loader:${project.loader_version}"
 
 	// Fabric API
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	// ModMenu (Hardcoded version to avoid missing property errors)
-	modCompileOnly "com.terraformersmc:modmenu:11.0.1"
+	// ModMenu (Fetched via Modrinth CDN to eliminate network timeouts)
+	modCompileOnly "maven.modrinth:modmenu:11.0.1"
 }
 
 processResources {
