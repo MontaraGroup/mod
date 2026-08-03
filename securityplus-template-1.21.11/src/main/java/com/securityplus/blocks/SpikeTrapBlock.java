@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -28,8 +29,8 @@ public class SpikeTrapBlock extends Block {
 
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-        if (!world.isClient && entity instanceof LivingEntity livingEntity) {
-            livingEntity.damage(world.getDamageSources().generic(), 4.0F);
+        if (!world.isClient() && world instanceof ServerWorld serverWorld && entity instanceof LivingEntity livingEntity) {
+            livingEntity.damage(serverWorld, world.getDamageSources().generic(), 4.0F);
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 1));
         }
         super.onSteppedOn(world, pos, state, entity);
