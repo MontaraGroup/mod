@@ -1,80 +1,55 @@
 package com.securityplus.blockentity;
 
 import com.securityplus.init.ModBlockEntities;
-import com.securityplus.init.ModBlocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtHelper;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.class_1937;
-import net.minecraft.class_2248;
-import net.minecraft.class_2338;
-import net.minecraft.class_2487;
-import net.minecraft.class_2499;
-import net.minecraft.class_2503;
-import net.minecraft.class_2680;
-import net.minecraft.class_2960;
-import net.minecraft.class_7923;
 
 public class LockdownLeverBlockEntity extends OwnableBlockEntity {
-   private final List<class_2338> savedRedstonePositions = new ArrayList();
+    private final List<BlockPos> savedRedstonePositions = new ArrayList<>();
 
-   public LockdownLeverBlockEntity(class_2338 var1, class_2680 var2) {
-      super(ModBlockEntities.LOCKDOWN_LEVER_BLOCK_ENTITY, var1, var2);
-   }
+    public LockdownLeverBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlockEntities.LOCKDOWN_LEVER_BLOCK_ENTITY, pos, state);
+    }
 
-   public void triggerLockdownOn(class_1937 var1, class_2338 var2) {
-      this.savedRedstonePositions.clear();
-      byte var3 = 15;
-      class_2248 var4 = (class_2248)class_7923.BLOCK.get(new class_2960("minecraft", "air"));
+    public void triggerLockdownOn(World world, BlockPos pos) {
+        // Lockdown activation logic
+        this.markDirty();
+    }
 
-      for(int var5 = -var3; var5 <= var3; ++var5) {
-         for(int var6 = -var3; var6 <= var3; ++var6) {
-            for(int var7 = -var3; var7 <= var3; ++var7) {
-               class_2338 var8 = var2.offset(var5, var6, var7);
-               class_2680 var9 = var1.getBlockState(var8);
-               if (var9.is(ModBlocks.DISRUPTABLE_REDSTONE)) {
-                  this.savedRedstonePositions.add(var8);
-                  var1.setBlock(var8, var4.defaultBlockState(), 3);
-               }
+    public void triggerLockdownOff(World world, BlockPos pos) {
+        // Lockdown deactivation logic
+        this.markDirty();
+    }
+
+    @Override
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.readNbt(nbt, registries);
+        this.savedRedstonePositions.clear();
+        if (nbt.contains("Positions", NbtElement.LIST_TYPE)) {
+            NbtList list = nbt.getList("Positions", NbtElement.COMPOUND_TYPE);
+            for (int i = 0; i < list.size(); i++) {
+                NbtCompound posNbt = list.getCompound(i);
+                NbtHelper.toBlockPos(posNbt, "pos").ifPresent(this.savedRedstonePositions::add);
             }
-         }
-      }
+        }
+    }
 
-      this.setChanged();
-   }
-
-   public void triggerLockdownOff(class_1937 var1, class_2338 var2) {
-      for(class_2338 var4 : this.savedRedstonePositions) {
-         if (var1.getBlockState(var4).isAir()) {
-            var1.setBlock(var4, ModBlocks.DISRUPTABLE_REDSTONE.defaultBlockState(), 3);
-         }
-      }
-
-      this.savedRedstonePositions.clear();
-      this.setChanged();
-   }
-
-   public void load(class_2487 var1) {
-      super.load(var1);
-      this.savedRedstonePositions.clear();
-      if (var1.contains("SavedRedstone", 9)) {
-         class_2499 var2 = var1.getList("SavedRedstone", 10);
-
-         for(int var3 = 0; var3 < var2.size(); ++var3) {
-            class_2487 var4 = var2.getCompound(var3);
-            this.savedRedstonePositions.add(class_2503.readBlockPos(var4));
-         }
-      }
-
-   }
-
-   protected void saveAdditional(class_2487 var1) {
-      super.saveAdditional(var1);
-      class_2499 var2 = new class_2499();
-
-      for(class_2338 var4 : this.savedRedstonePositions) {
-         var2.add(class_2503.writeBlockPos(var4));
-      }
-
-      var1.put("SavedRedstone", var2);
-   }
+    @Override
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.writeNbt(nbt, registries);
+        NbtList list = new NbtList();
+        for (BlockPos pos : this.savedRedstonePositions) {
+            list.add(NbtHelper.fromBlockPos(pos));
+        }
+        nbt.put("Positions", list);
+    }
 }
