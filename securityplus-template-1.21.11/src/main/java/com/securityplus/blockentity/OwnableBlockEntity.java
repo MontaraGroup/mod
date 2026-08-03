@@ -1,58 +1,49 @@
 package com.securityplus.blockentity;
 
 import com.securityplus.init.ModBlockEntities;
-import net.minecraft.class_1657;
-import net.minecraft.class_2338;
-import net.minecraft.class_2487;
-import net.minecraft.class_2586;
-import net.minecraft.class_2591;
-import net.minecraft.class_2680;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.math.BlockPos;
 
-public class OwnableBlockEntity extends class_2586 {
-   private String ownerUUID = "";
-   private String ownerName = "";
+import java.util.UUID;
 
-   public OwnableBlockEntity(class_2338 var1, class_2680 var2) {
-      super(ModBlockEntities.OWNABLE_BLOCK_ENTITY, var1, var2);
-   }
+public class OwnableBlockEntity extends BlockEntity {
+    private UUID ownerUuid;
 
-   public OwnableBlockEntity(class_2591<?> var1, class_2338 var2, class_2680 var3) {
-      super(var1, var2, var3);
-   }
+    public OwnableBlockEntity(BlockPos pos, BlockState state) {
+        this(ModBlockEntities.OWNABLE_BLOCK_ENTITY, pos, state);
+    }
 
-   public void setOwner(String var1, String var2) {
-      this.ownerUUID = var1 != null ? var1 : "";
-      this.ownerName = var2 != null ? var2 : "";
-      this.setChanged();
-   }
+    public OwnableBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
 
-   public String getOwnerUUID() {
-      return this.ownerUUID;
-   }
+    public boolean isOwnedBy(PlayerEntity player) {
+        return ownerUuid != null && ownerUuid.equals(player.getUuid());
+    }
 
-   public String getOwnerName() {
-      return this.ownerName;
-   }
+    public void setOwner(UUID uuid) {
+        this.ownerUuid = uuid;
+        this.markDirty();
+    }
 
-   public boolean isOwnedBy(class_1657 var1) {
-      return this.ownerUUID.isEmpty() ? true : var1.getUUID().toString().equals(this.ownerUUID);
-   }
+    @Override
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.readNbt(nbt, registries);
+        if (nbt.containsUuid("Owner")) {
+            this.ownerUuid = nbt.getUuid("Owner");
+        }
+    }
 
-   public void load(class_2487 var1) {
-      super.load(var1);
-      if (var1.contains("OwnerUUID")) {
-         this.ownerUUID = var1.getString("OwnerUUID");
-      }
-
-      if (var1.contains("OwnerName")) {
-         this.ownerName = var1.getString("OwnerName");
-      }
-
-   }
-
-   protected void saveAdditional(class_2487 var1) {
-      super.saveAdditional(var1);
-      var1.putString("OwnerUUID", this.ownerUUID);
-      var1.putString("OwnerName", this.ownerName);
-   }
+    @Override
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.writeNbt(nbt, registries);
+        if (this.ownerUuid != null) {
+            nbt.putUuid("Owner", this.ownerUuid);
+        }
+    }
 }
