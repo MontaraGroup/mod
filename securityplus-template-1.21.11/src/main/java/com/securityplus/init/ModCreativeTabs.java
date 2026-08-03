@@ -1,41 +1,47 @@
 package com.securityplus.init;
 
-import net.minecraft.class_1761;
-import net.minecraft.class_1799;
-import net.minecraft.class_2378;
-import net.minecraft.class_2561;
-import net.minecraft.class_2960;
-import net.minecraft.class_7923;
-import net.minecraft.class_1761.class_7916;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 public class ModCreativeTabs {
-   public static final class_1761 SECURITYPLUS_TAB;
 
-   public static void registerCreativeTabs() {
-   }
+    public static final ItemGroup SECURITYPLUS_TAB = Registry.register(
+            Registries.ITEM_GROUP,
+            Identifier.of("securityplus", "securityplus_tab"),
+            FabricItemGroup.builder()
+                    .icon(() -> new ItemStack(ModItems.KEYPAD))
+                    .displayName(Text.translatable("itemGroup.securityplus.securityplus_tab"))
+                    .entries((displayContext, entries) -> {
+                        entries.add(ModItems.UNIVERSAL_BLOCK_REMOVER);
+                        entries.add(ModItems.UNIVERSAL_OWNER_CHANGER);
+                        entries.add(ModItems.CODEBREAKER);
+                        entries.add(ModBlocks.SENTRY_TURRET);
+                        entries.add(ModBlocks.DISRUPTABLE_REDSTONE);
+                        entries.add(ModBlocks.MOTION_SENSOR);
+                        entries.add(ModBlocks.ELECTRIC_FENCE);
+                        entries.add(ModBlocks.ALARM_SIREN);
+                        entries.add(ModBlocks.LASER_GRID);
+                        entries.add(ModBlocks.SPIKE_TRAP);
+                        entries.add(ModBlocks.KEYPAD);
+                        entries.add(ModBlocks.RETINAL_SCANNER);
+                        entries.add(ModBlocks.LOCKDOWN_LEVER);
+                        entries.add(ModBlocks.PANIC_BUTTON);
+                        entries.add(ModBlocks.LOCKDOWN_DOOR);
+                        entries.add(ModBlocks.LOCKDOWN_SHUTTER);
+                        entries.add(ModBlocks.LOCKDOWN_WALL);
+                        entries.add(ModBlocks.REINFORCED_STONE);
+                        entries.add(ModBlocks.REINFORCED_OBSIDIAN);
+                        entries.add(ModBlocks.REINFORCED_IRON_BARS);
+                    })
+                    .build()
+    );
 
-   static {
-      SECURITYPLUS_TAB = (class_1761)class_2378.register(class_7923.CREATIVE_MODE_TAB, new class_2960("securityplus", "securityplus_tab"), class_1761.builder(class_7916.TOP, 0).title(class_2561.translatable("itemGroup.securityplus")).icon(() -> new class_1799(ModItems.SENTRY_TURRET)).displayItems((var0, var1) -> {
-         var1.accept(ModItems.SENTRY_TURRET);
-         var1.accept(ModItems.DISRUPTABLE_REDSTONE);
-         var1.accept(ModItems.LOCKDOWN_LEVER);
-         var1.accept(ModItems.PANIC_BUTTON);
-         var1.accept(ModItems.LOCKDOWN_DOOR);
-         var1.accept(ModItems.LOCKDOWN_SHUTTER);
-         var1.accept(ModItems.LOCKDOWN_WALL);
-         var1.accept(ModItems.UNIVERSAL_BLOCK_REMOVER);
-         var1.accept(ModItems.UNIVERSAL_OWNER_CHANGER);
-         var1.accept(ModItems.CODEBREAKER);
-         var1.accept(ModItems.KEYPAD);
-         var1.accept(ModItems.RETINAL_SCANNER);
-         var1.accept(ModItems.MOTION_SENSOR);
-         var1.accept(ModItems.ELECTRIC_FENCE);
-         var1.accept(ModItems.ALARM_SIREN);
-         var1.accept(ModItems.LASER_GRID);
-         var1.accept(ModItems.SPIKE_TRAP);
-         var1.accept(ModItems.REINFORCED_STONE);
-         var1.accept(ModItems.REINFORCED_OBSIDIAN);
-         var1.accept(ModItems.REINFORCED_IRON_BARS);
-      }).build());
-   }
+    public static void registerModCreativeTabs() {
+        // Triggers static initialization
+    }
 }
