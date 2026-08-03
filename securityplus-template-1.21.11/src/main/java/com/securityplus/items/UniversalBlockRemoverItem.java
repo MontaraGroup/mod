@@ -25,7 +25,7 @@ public class UniversalBlockRemoverItem extends Item {
         if (!world.isClient() && player != null) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof OwnableBlockEntity ownable) {
-                if (ownable.isOwnedBy(player) || player.hasPermissionLevel(2)) {
+                if (ownable.isOwnedBy(player) || player.getPermissionLevel() >= 2) {
                     world.breakBlock(pos, true, player);
                     return ActionResult.SUCCESS;
                 } else {
