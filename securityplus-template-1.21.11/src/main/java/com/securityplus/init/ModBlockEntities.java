@@ -4,25 +4,53 @@ import com.securityplus.blockentity.KeypadBlockEntity;
 import com.securityplus.blockentity.LockdownLeverBlockEntity;
 import com.securityplus.blockentity.OwnableBlockEntity;
 import com.securityplus.blockentity.SentryTurretBlockEntity;
-import net.minecraft.class_2248;
-import net.minecraft.class_2378;
-import net.minecraft.class_2591;
-import net.minecraft.class_2960;
-import net.minecraft.class_7923;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
 
 public class ModBlockEntities {
-   public static final class_2591<OwnableBlockEntity> OWNABLE_BLOCK_ENTITY;
-   public static final class_2591<KeypadBlockEntity> KEYPAD_BLOCK_ENTITY;
-   public static final class_2591<LockdownLeverBlockEntity> LOCKDOWN_LEVER_BLOCK_ENTITY;
-   public static final class_2591<SentryTurretBlockEntity> SENTRY_TURRET_BLOCK_ENTITY;
 
-   public static void registerBlockEntities() {
-   }
+    public static final BlockEntityType<OwnableBlockEntity> OWNABLE_BLOCK_ENTITY = register(
+            "ownable_block_entity",
+            BlockEntityType.Builder.create(
+                    OwnableBlockEntity::new,
+                    ModBlocks.REINFORCED_STONE,
+                    ModBlocks.REINFORCED_OBSIDIAN,
+                    ModBlocks.REINFORCED_IRON_BARS
+            ).build()
+    );
 
-   static {
-      OWNABLE_BLOCK_ENTITY = (class_2591)class_2378.register(class_7923.BLOCK_ENTITY_TYPE, new class_2960("securityplus", "ownable_be"), class_2591.create(OwnableBlockEntity::new, new class_2248[]{ModBlocks.REINFORCED_STONE, ModBlocks.REINFORCED_OBSIDIAN, ModBlocks.REINFORCED_IRON_BARS, ModBlocks.RETINAL_SCANNER}));
-      KEYPAD_BLOCK_ENTITY = (class_2591)class_2378.register(class_7923.BLOCK_ENTITY_TYPE, new class_2960("securityplus", "keypad_be"), class_2591.create(KeypadBlockEntity::new, new class_2248[]{ModBlocks.KEYPAD}));
-      LOCKDOWN_LEVER_BLOCK_ENTITY = (class_2591)class_2378.register(class_7923.BLOCK_ENTITY_TYPE, new class_2960("securityplus", "lockdown_lever_be"), class_2591.create(LockdownLeverBlockEntity::new, new class_2248[]{ModBlocks.LOCKDOWN_LEVER}));
-      SENTRY_TURRET_BLOCK_ENTITY = (class_2591)class_2378.register(class_7923.BLOCK_ENTITY_TYPE, new class_2960("securityplus", "sentry_turret_be"), class_2591.create(SentryTurretBlockEntity::new, new class_2248[]{ModBlocks.SENTRY_TURRET}));
-   }
+    public static final BlockEntityType<KeypadBlockEntity> KEYPAD_BLOCK_ENTITY = register(
+            "keypad_block_entity",
+            BlockEntityType.Builder.create(
+                    KeypadBlockEntity::new,
+                    ModBlocks.KEYPAD
+            ).build()
+    );
+
+    public static final BlockEntityType<LockdownLeverBlockEntity> LOCKDOWN_LEVER_BLOCK_ENTITY = register(
+            "lockdown_lever_block_entity",
+            BlockEntityType.Builder.create(
+                    LockdownLeverBlockEntity::new,
+                    ModBlocks.LOCKDOWN_LEVER
+            ).build()
+    );
+
+    public static final BlockEntityType<SentryTurretBlockEntity> SENTRY_TURRET_BLOCK_ENTITY = register(
+            "sentry_turret_block_entity",
+            BlockEntityType.Builder.create(
+                    SentryTurretBlockEntity::new,
+                    ModBlocks.SENTRY_TURRET
+            ).build()
+    );
+
+    private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type) {
+        return Registry.register(Registries.BLOCK_ENTITY_TYPE, Identifier.of("securityplus", name), type);
+    }
+
+    public static void registerModBlockEntities() {
+        // Triggers static initialization
+    }
 }
