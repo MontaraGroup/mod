@@ -31,7 +31,7 @@ public class SentryTurretBlockEntity extends OwnableBlockEntity {
 
         for (LivingEntity target : targets) {
             if (target instanceof PlayerEntity player && blockEntity.isOwnedBy(player)) {
-                continue; // Ignore base owner
+                continue;
             }
             if (target.isAlive()) {
                 blockEntity.fireArrow(serverWorld, pos, target);
