@@ -21,12 +21,10 @@ public class LockdownLeverBlockEntity extends OwnableBlockEntity {
     }
 
     public void triggerLockdownOn(World world, BlockPos pos) {
-        // Lockdown activation logic
         this.markDirty();
     }
 
     public void triggerLockdownOff(World world, BlockPos pos) {
-        // Lockdown deactivation logic
         this.markDirty();
     }
 
