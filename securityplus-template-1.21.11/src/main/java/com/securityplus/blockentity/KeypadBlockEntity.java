@@ -13,17 +13,17 @@ public class KeypadBlockEntity extends OwnableBlockEntity {
         super(ModBlockEntities.KEYPAD_BLOCK_ENTITY, pos, state);
     }
 
-    public String getPasscode() {
-        return passcode;
-    }
-
     public void setPasscode(String passcode) {
         this.passcode = passcode;
         this.markDirty();
     }
 
+    public String getPasscode() {
+        return this.passcode;
+    }
+
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
         super.readNbt(nbt, registries);
         if (nbt.contains("Passcode")) {
             this.passcode = nbt.getString("Passcode");
@@ -33,8 +33,6 @@ public class KeypadBlockEntity extends OwnableBlockEntity {
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
         super.writeNbt(nbt, registries);
-        if (this.passcode != null) {
-            nbt.putString("Passcode", this.passcode);
-        }
+        nbt.putString("Passcode", this.passcode);
     }
 }
