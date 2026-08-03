@@ -7,12 +7,13 @@ import com.securityplus.init.ModItems;
 import net.fabricmc.api.ModInitializer;
 
 public class SecurityPlus implements ModInitializer {
-   public static final String MODID = "securityplus";
+    public static final String MOD_ID = "securityplus";
 
-   public void onInitialize() {
-      ModBlocks.registerModBlocks();
-      ModItems.registerModItems();
-      ModBlockEntities.registerBlockEntities();
-      ModCreativeTabs.registerCreativeTabs();
-   }
+    @Override
+    public void onInitialize() {
+        ModBlocks.registerBlocks();
+        ModItems.registerItems();
+        ModBlockEntities.registerBlockEntities();
+        ModCreativeTabs.registerCreativeTabs();
+    }
 }
