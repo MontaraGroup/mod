@@ -8,6 +8,10 @@ group = project.maven_group
 
 repositories {
 	// Add repositories to retrieve artifacts from in here.
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/releases/"
+	}
 }
 
 dependencies {
@@ -21,6 +25,11 @@ dependencies {
 
 	// Fabric API
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	// ModMenu (Compile-only so ModMenu isn't forcibly bundled into your jar)
+	modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+	// Optional: Use modLocalRuntime if you want ModMenu present when launching test instances:
+	// modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
 }
 
 processResources {
