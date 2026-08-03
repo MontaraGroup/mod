@@ -21,18 +21,18 @@ public class LockdownLeverBlockEntity extends OwnableBlockEntity {
     }
 
     public void triggerLockdownOn(World world, BlockPos pos) {
-        this.markDirty();
+        // Lockdown activation logic
     }
 
     public void triggerLockdownOff(World world, BlockPos pos) {
-        this.markDirty();
+        // Lockdown deactivation logic
     }
 
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
         super.readNbt(nbt, registries);
         this.savedRedstonePositions.clear();
-        if (nbt.contains("Positions", NbtElement.LIST_TYPE)) {
+        if (nbt.contains("Positions")) {
             NbtList list = nbt.getList("Positions", NbtElement.COMPOUND_TYPE);
             for (int i = 0; i < list.size(); i++) {
                 NbtCompound posNbt = list.getCompound(i);
