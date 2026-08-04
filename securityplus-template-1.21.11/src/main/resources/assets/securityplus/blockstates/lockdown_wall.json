@@ -1,6 +1,7 @@
 {
   "variants": {
-    "powered=false": { "model": "minecraft:block/stone" },
-    "powered=true": { "model": "minecraft:block/obsidian" }
+    "": {
+      "model": "securityplus:block/lockdown_wall"
+    }
   }
 }
