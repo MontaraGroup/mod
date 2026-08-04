@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 
 public class LockdownLeverBlock extends Block implements BlockEntityProvider {
     public static final BooleanProperty POWERED = Properties.POWERED;
+    private static final int RADIUS = 32; // Wireless search radius (32 blocks in all directions)
 
     public LockdownLeverBlock(Settings settings) {
         super(settings);
@@ -51,8 +52,15 @@ public class LockdownLeverBlock extends Block implements BlockEntityProvider {
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (!world.isClient()) {
             boolean powered = !state.get(POWERED);
+            
+            // 1. Update lever BlockState & redstone neighbors
             world.setBlockState(pos, state.with(POWERED, powered), Block.NOTIFY_LISTENERS);
             world.updateNeighbors(pos, this);
+
+            // 2. Trigger wireless scan for all LockdownControllable blocks within range
+            triggerNetwork(world, pos, powered);
+
+            // 3. Block Entity logic, sounds, and player notifications
             BlockEntity be = world.getBlockEntity(pos);
             if (be instanceof LockdownLeverBlockEntity lever) {
                 if (powered) {
@@ -67,5 +75,21 @@ public class LockdownLeverBlock extends Block implements BlockEntityProvider {
             }
         }
         return ActionResult.SUCCESS;
+    }
+
+    /**
+     * Scans surrounding 32x32x32 area and updates any LockdownControllable blocks.
+     */
+    private void triggerNetwork(World world, BlockPos center, boolean lockdownActive) {
+        BlockPos.iterate(
+            center.add(-RADIUS, -RADIUS, -RADIUS),
+            center.add(RADIUS, RADIUS, RADIUS)
+        ).forEach(targetPos -> {
+            BlockState targetState = world.getBlockState(targetPos);
+            
+            if (targetState.getBlock() instanceof LockdownControllable controllable) {
+                controllable.setLockdownState(world, targetPos, targetState, lockdownActive);
+            }
+        });
     }
 }
