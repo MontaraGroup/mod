@@ -1,12 +1,11 @@
 package com.securityplus.blockentity;
 
 import com.securityplus.init.ModBlockEntities;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtHelper;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 
@@ -52,19 +51,20 @@ public class OwnableBlockEntity extends BlockEntity {
         return this.ownerUuid;
     }
 
-    @Override
-    protected void readData(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.readData(nbt, registries);
-        if (nbt.contains("Owner")) {
-            this.ownerUuid = NbtHelper.toUuid(nbt.get("Owner"));
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        if (nbt.contains("OwnerUuid")) {
+            String uuidStr = nbt.getString("OwnerUuid").orElse("");
+            if (!uuidStr.isEmpty()) {
+                try {
+                    this.ownerUuid = UUID.fromString(uuidStr);
+                } catch (IllegalArgumentException ignored) {}
+            }
         }
     }
 
-    @Override
-    protected void writeData(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.writeData(nbt, registries);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
         if (this.ownerUuid != null) {
-            nbt.put("Owner", NbtHelper.fromUuid(this.ownerUuid));
+            nbt.putString("OwnerUuid", this.ownerUuid.toString());
         }
     }
 }
