@@ -1,14 +1,11 @@
 package com.securityplus.blockentity;
 
-import com.securityplus.init.ModBlockEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,27 +14,18 @@ public class LockdownLeverBlockEntity extends OwnableBlockEntity {
     private final List<BlockPos> savedRedstonePositions = new ArrayList<>();
 
     public LockdownLeverBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.LOCKDOWN_LEVER_BLOCK_ENTITY, pos, state);
-    }
-
-    public void triggerLockdownOn(World world, BlockPos pos) {
-        // Lockdown activation logic
-    }
-
-    public void triggerLockdownOff(World world, BlockPos pos) {
-        // Lockdown deactivation logic
+        super(pos, state);
     }
 
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
         super.readNbt(nbt, registries);
         this.savedRedstonePositions.clear();
-        if (nbt.contains("Positions")) {
-            NbtList list = nbt.getList("Positions", NbtElement.COMPOUND_TYPE);
-            for (int i = 0; i < list.size(); i++) {
-                NbtCompound posNbt = list.getCompound(i);
-                NbtHelper.toBlockPos(posNbt, "pos").ifPresent(this.savedRedstonePositions::add);
-            }
+        
+        NbtList list = nbt.getList("Positions").orElseGet(NbtList::new);
+        for (int i = 0; i < list.size(); i++) {
+            NbtCompound posNbt = list.getCompound(i).orElseGet(NbtCompound::new);
+            NbtHelper.toBlockPos(posNbt).ifPresent(this.savedRedstonePositions::add);
         }
     }
 
@@ -49,5 +37,16 @@ public class LockdownLeverBlockEntity extends OwnableBlockEntity {
             list.add(NbtHelper.fromBlockPos(pos));
         }
         nbt.put("Positions", list);
+    }
+
+    public List<BlockPos> getSavedRedstonePositions() {
+        return savedRedstonePositions;
+    }
+
+    public void addPosition(BlockPos pos) {
+        if (!savedRedstonePositions.contains(pos)) {
+            savedRedstonePositions.add(pos);
+            markDirty();
+        }
     }
 }
