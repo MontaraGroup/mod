@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "minecraft:block/dispenser" }
+    "": {
+      "model": "securityplus:block/sentry_turret_block"
+    }
   }
 }
