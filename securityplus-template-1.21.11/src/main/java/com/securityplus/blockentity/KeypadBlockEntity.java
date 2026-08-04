@@ -1,6 +1,5 @@
 package com.securityplus.blockentity;
 
-import com.securityplus.init.ModBlockEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
@@ -10,29 +9,29 @@ public class KeypadBlockEntity extends OwnableBlockEntity {
     private String passcode = "";
 
     public KeypadBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.KEYPAD_BLOCK_ENTITY, pos, state);
-    }
-
-    public void setPasscode(String passcode) {
-        this.passcode = passcode;
-        this.markDirty();
-    }
-
-    public String getPasscode() {
-        return this.passcode;
+        super(pos, state);
     }
 
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
         super.readNbt(nbt, registries);
-        if (nbt.contains("Passcode")) {
-            this.passcode = nbt.getString("Passcode");
-        }
+        this.passcode = nbt.getString("Passcode").orElse("");
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
         super.writeNbt(nbt, registries);
-        nbt.putString("Passcode", this.passcode);
+        if (this.passcode != null) {
+            nbt.putString("Passcode", this.passcode);
+        }
+    }
+
+    public String getPasscode() {
+        return passcode;
+    }
+
+    public void setPasscode(String passcode) {
+        this.passcode = passcode;
+        markDirty();
     }
 }
