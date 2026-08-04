@@ -24,11 +24,10 @@ public class ModCreativeTabs {
                     .icon(() -> new ItemStack(ModItems.KEYCARD))
                     .displayName(Text.translatable("itemGroup.securityplus.securityplus_tab"))
                     .entries((displayContext, entries) -> {
-                        // Pass items directly so Fabric handles count=1 automatically
+                        // Passing Item/Block references directly lets Fabric manage stack count=1 automatically
                         entries.add(ModItems.KEYCARD);
                         entries.add(ModItems.KEYCARD_HOLDER);
                         
-                        // Add blocks
                         entries.add(ModBlocks.REINFORCED_BLOCK);
                         entries.add(ModBlocks.KEYPAD_BLOCK);
                         entries.add(ModBlocks.LOCKDOWN_LEVER_BLOCK);
