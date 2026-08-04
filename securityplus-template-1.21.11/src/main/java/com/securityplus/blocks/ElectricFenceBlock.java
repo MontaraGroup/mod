@@ -38,7 +38,7 @@ public class ElectricFenceBlock extends Block {
     }
 
     @Override
-    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void steppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
         if (!world.isClient() && entity instanceof LivingEntity living) {
             if (state.get(POWERED) || world.isReceivingRedstonePower(pos)) {
                 living.serverDamage(world.getDamageSources().lightningBolt(), 4.0F);
@@ -46,5 +46,6 @@ public class ElectricFenceBlock extends Block {
                 living.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 1));
             }
         }
+        super.steppedOn(world, pos, state, entity);
     }
 }
