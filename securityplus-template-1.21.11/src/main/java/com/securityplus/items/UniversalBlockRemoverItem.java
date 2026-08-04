@@ -11,8 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UniversalBlockRemoverItem extends Item {
-
-    public UniversalBlockRemoverItem(Item.Settings settings) {
+    public UniversalBlockRemoverItem(Settings settings) {
         super(settings);
     }
 
@@ -22,15 +21,20 @@ public class UniversalBlockRemoverItem extends Item {
         BlockPos pos = context.getBlockPos();
         PlayerEntity player = context.getPlayer();
 
-        if (!world.isClient() && player != null) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof OwnableBlockEntity ownable) {
-                if (ownable.isOwnedBy(player) || player.getPermissionLevel() >= 2) {
+        if (player == null) return ActionResult.PASS;
+
+        BlockEntity be = world.getBlockEntity(pos);
+        if (be instanceof OwnableBlockEntity ownable) {
+            if (ownable.isOwnedBy(player) || player.hasPermissionLevel(2)) {
+                if (!world.isClient()) {
                     world.breakBlock(pos, true, player);
-                    return ActionResult.SUCCESS;
-                } else {
+                }
+                return ActionResult.SUCCESS;
+            } else {
+                if (!world.isClient()) {
                     player.sendMessage(Text.literal("You do not own this block!"), true);
                 }
+                return ActionResult.FAIL;
             }
         }
         return ActionResult.PASS;
