@@ -1,5 +1,10 @@
 {
   "variants": {
-    "": { "model": "minecraft:block/iron_block" }
+    "powered=false": {
+      "model": "securityplus:block/keypad_block"
+    },
+    "powered=true": {
+      "model": "securityplus:block/keypad_block_powered"
+    }
   }
 }
