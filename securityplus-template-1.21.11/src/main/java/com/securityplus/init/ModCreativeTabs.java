@@ -27,13 +27,21 @@ public class ModCreativeTabs {
                         // Add items directly from ModItems
                         entries.add(ModItems.KEYCARD);
                         entries.add(ModItems.KEYCARD_HOLDER);
-                        
+
                         // Add registered BlockItems
                         entries.add(ModItems.REINFORCED_BLOCK);
                         entries.add(ModItems.KEYPAD_BLOCK);
                         entries.add(ModItems.LOCKDOWN_LEVER_BLOCK);
                         entries.add(ModItems.SENTRY_TURRET_BLOCK);
+                        entries.add(ModItems.LOCKDOWN_DOOR);
+                        entries.add(ModItems.ALARM_SIREN);
+                        entries.add(ModItems.LASER_GRID);
+                        entries.add(ModItems.RETINAL_SCANNER);
+                        entries.add(ModItems.MOTION_SENSOR);
+                        entries.add(ModItems.ELECTRIC_FENCE);
                         entries.add(ModItems.LOCKDOWN_WALL);
+                        entries.add(ModItems.LOCKDOWN_SHUTTER);
+                        entries.add(ModItems.PANIC_BUTTON);
                     })
                     .build()
     );
