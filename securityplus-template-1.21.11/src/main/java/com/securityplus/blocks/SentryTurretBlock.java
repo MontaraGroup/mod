@@ -1,8 +1,8 @@
 package com.securityplus.blocks;
 
+import com.securityplus.blockentity.OwnableBlockEntity;
 import com.securityplus.blockentity.SentryTurretBlockEntity;
 import com.securityplus.init.ModBlockEntities;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -14,10 +14,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class SentryTurretBlock extends Block implements BlockEntityProvider {
-
-    public SentryTurretBlock(AbstractBlock.Settings settings) {
+    public SentryTurretBlock(Settings settings) {
         super(settings);
     }
 
@@ -27,20 +27,19 @@ public class SentryTurretBlock extends Block implements BlockEntityProvider {
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(type, ModBlockEntities.SENTRY_TURRET_BLOCK_ENTITY, SentryTurretBlockEntity::tick);
-    }
-
-    @SuppressWarnings("unchecked")
-    private static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> validateTicker(BlockEntityType<A> givenType, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
-        return expectedType == givenType ? (BlockEntityTicker<A>) ticker : null;
-    }
-
-    @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         super.onPlaced(world, pos, state, placer, itemStack);
-        if (placer instanceof PlayerEntity player && world.getBlockEntity(pos) instanceof SentryTurretBlockEntity turret) {
-            turret.setOwner(player.getUuid());
+        if (!world.isClient() && placer instanceof PlayerEntity player) {
+            BlockEntity be = world.getBlockEntity(pos);
+            if (be instanceof OwnableBlockEntity ownable) {
+                ownable.setOwner(player);
+            }
         }
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return type == ModBlockEntities.SENTRY_TURRET_BLOCK_ENTITY ? (world1, pos, state1, blockEntity) -> SentryTurretBlockEntity.tick(world1, pos, state1, (SentryTurretBlockEntity) blockEntity) : null;
     }
 }
