@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
-public class LockdownDoorBlock extends Block {
+public class LockdownDoorBlock extends Block implements LockdownControllable {
     public static final BooleanProperty POWERED = Properties.POWERED;
     public static final BooleanProperty OPEN = Properties.OPEN;
 
@@ -35,12 +35,21 @@ public class LockdownDoorBlock extends Block {
         if (!world.isClient()) {
             boolean hasSignal = world.isReceivingRedstonePower(pos);
             if (state.get(POWERED) != hasSignal) {
-                if (hasSignal) {
-                    world.setBlockState(pos, state.with(POWERED, true).with(OPEN, false), Block.NOTIFY_LISTENERS);
-                    world.playSound(null, pos, SoundEvents.BLOCK_IRON_DOOR_CLOSE, SoundCategory.BLOCKS, 1.0F, 0.8F);
-                } else {
-                    world.setBlockState(pos, state.with(POWERED, false), Block.NOTIFY_LISTENERS);
-                }
+                setLockdownState(world, pos, state, hasSignal);
+            }
+        }
+    }
+
+    @Override
+    public void setLockdownState(World world, BlockPos pos, BlockState state, boolean active) {
+        if (active) {
+            if (!state.get(POWERED) || state.get(OPEN)) {
+                world.setBlockState(pos, state.with(POWERED, true).with(OPEN, false), Block.NOTIFY_LISTENERS);
+                world.playSound(null, pos, SoundEvents.BLOCK_IRON_DOOR_CLOSE, SoundCategory.BLOCKS, 1.0F, 0.8F);
+            }
+        } else {
+            if (state.get(POWERED)) {
+                world.setBlockState(pos, state.with(POWERED, false), Block.NOTIFY_LISTENERS);
             }
         }
     }
