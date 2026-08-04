@@ -5,6 +5,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -32,20 +33,24 @@ public class UniversalBlockRemoverItem extends Item {
                 return ActionResult.SUCCESS;
             }
 
-            // Check OP status directly via PlayerManager on the server
-            boolean isOp = world.getServer() != null && world.getServer().getPlayerManager().isOperator(player.getGameProfile());
+            // Check OP permission on ServerPlayerEntity
+            boolean isOp = false;
+            if (player instanceof ServerPlayerEntity serverPlayer) {
+                isOp = serverPlayer.hasPermissionLevel(2);
+            }
+
             boolean canRemove = ownable.isOwnedBy(player) || player.isCreative() || isOp;
 
             if (canRemove) {
                 world.breakBlock(pos, true, player);
                 player.sendMessage(
-                    Text.literal("[SECURITY] Block removed.").formatted(Formatting.GREEN), 
+                    Text.literal("[SECURITY] Block removed.").formatted(Formatting.GREEN),
                     true
                 );
                 return ActionResult.SUCCESS;
             } else {
                 player.sendMessage(
-                    Text.literal("[SECURITY] Access Denied: You do not own this block.").formatted(Formatting.RED), 
+                    Text.literal("[SECURITY] Access Denied: You do not own this block.").formatted(Formatting.RED),
                     true
                 );
                 return ActionResult.FAIL;
