@@ -61,7 +61,7 @@ public class LaserGridBlock extends Block {
                     double maxY = Math.max(pos.getY(), targetPos.getY()) + 1.0;
                     double maxZ = Math.max(pos.getZ(), targetPos.getZ()) + 1.0;
                     Box box = new Box(minX, minY, minZ, maxX, maxY, maxZ);
-                    List<LivingEntity> entities = world.getEntitiesOfClass(LivingEntity.class, box);
+                    List<LivingEntity> entities = world.getEntitiesByClass(LivingEntity.class, box, e -> true);
                     if (entities.isEmpty()) {
                         break;
                     }
