@@ -11,8 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UniversalOwnerChangerItem extends Item {
-
-    public UniversalOwnerChangerItem(Item.Settings settings) {
+    public UniversalOwnerChangerItem(Settings settings) {
         super(settings);
     }
 
@@ -23,10 +22,10 @@ public class UniversalOwnerChangerItem extends Item {
         PlayerEntity player = context.getPlayer();
 
         if (!world.isClient() && player != null) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof OwnableBlockEntity ownable) {
-                ownable.setOwner(player.getUuid());
-                player.sendMessage(Text.literal("Block ownership updated to " + player.getName().getString()), true);
+            BlockEntity be = world.getBlockEntity(pos);
+            if (be instanceof OwnableBlockEntity ownable) {
+                ownable.setOwner(player);
+                player.sendMessage(Text.literal("§a[SECURITY] Block ownership transferred to " + player.getName().getString()), true);
                 return ActionResult.SUCCESS;
             }
         }
