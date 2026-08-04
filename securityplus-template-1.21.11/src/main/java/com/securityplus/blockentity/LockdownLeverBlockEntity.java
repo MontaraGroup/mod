@@ -42,8 +42,8 @@ public class LockdownLeverBlockEntity extends OwnableBlockEntity {
     }
 
     @Override
-    protected void readData(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.readData(nbt, registries);
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.readNbt(nbt, registries);
         this.savedRedstonePositions.clear();
         if (nbt.contains("RedstonePositions")) {
             NbtList list = nbt.getList("RedstonePositions").orElse(new NbtList());
@@ -60,8 +60,8 @@ public class LockdownLeverBlockEntity extends OwnableBlockEntity {
     }
 
     @Override
-    protected void writeData(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.writeData(nbt, registries);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.writeNbt(nbt, registries);
         NbtList list = new NbtList();
         for (BlockPos pos : this.savedRedstonePositions) {
             NbtCompound posNbt = new NbtCompound();
