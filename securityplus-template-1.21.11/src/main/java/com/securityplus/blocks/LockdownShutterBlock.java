@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
-public class LockdownShutterBlock extends Block {
+public class LockdownShutterBlock extends Block implements LockdownControllable {
     public static final BooleanProperty POWERED = Properties.POWERED;
 
     public LockdownShutterBlock(Settings settings) {
@@ -30,9 +30,16 @@ public class LockdownShutterBlock extends Block {
         if (!world.isClient()) {
             boolean hasSignal = world.isReceivingRedstonePower(pos);
             if (state.get(POWERED) != hasSignal) {
-                world.setBlockState(pos, state.with(POWERED, hasSignal), Block.NOTIFY_LISTENERS);
-                world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_USE, SoundCategory.BLOCKS, 0.5F, 1.2F);
+                setLockdownState(world, pos, state, hasSignal);
             }
+        }
+    }
+
+    @Override
+    public void setLockdownState(World world, BlockPos pos, BlockState state, boolean active) {
+        if (state.get(POWERED) != active) {
+            world.setBlockState(pos, state.with(POWERED, active), Block.NOTIFY_LISTENERS);
+            world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_USE, SoundCategory.BLOCKS, 0.5F, 1.2F);
         }
     }
 }
