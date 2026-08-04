@@ -11,6 +11,8 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.block.WireOrientation;
+import org.jetbrains.annotations.Nullable;
 
 public class ElectricFenceBlock extends Block {
     public static final BooleanProperty POWERED = Properties.POWERED;
@@ -26,7 +28,7 @@ public class ElectricFenceBlock extends Block {
     }
 
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         if (!world.isClient()) {
             boolean hasSignal = world.isReceivingRedstonePower(pos);
             if (state.get(POWERED) != hasSignal) {
@@ -44,6 +46,5 @@ public class ElectricFenceBlock extends Block {
                 living.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 1));
             }
         }
-        super.onEntityCollision(state, world, pos, entity);
     }
 }
