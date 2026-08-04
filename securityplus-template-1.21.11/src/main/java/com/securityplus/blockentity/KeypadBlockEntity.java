@@ -27,14 +27,14 @@ public class KeypadBlockEntity extends OwnableBlockEntity {
     }
 
     @Override
-    protected void readData(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.readData(nbt, registries);
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.readNbt(nbt, registries);
         this.passcode = nbt.getString("Passcode").orElse("1234");
     }
 
     @Override
-    protected void writeData(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.writeData(nbt, registries);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.writeNbt(nbt, registries);
         nbt.putString("Passcode", this.passcode);
     }
 }
