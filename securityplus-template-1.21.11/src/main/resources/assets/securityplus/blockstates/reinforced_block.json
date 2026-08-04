@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "securityplus:block/reinforced_block"
+    }
+  }
+}
