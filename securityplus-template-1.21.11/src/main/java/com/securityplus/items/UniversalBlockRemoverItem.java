@@ -28,13 +28,12 @@ public class UniversalBlockRemoverItem extends Item {
 
         BlockEntity be = world.getBlockEntity(pos);
         if (be instanceof OwnableBlockEntity ownable) {
-            // Return SUCCESS on client to handle hand swing animation smoothly
             if (world.isClient()) {
                 return ActionResult.SUCCESS;
             }
 
-            // Server-side ownership & permission check
-            boolean isOp = player.hasPermissionLevel(2);
+            // Check OP status directly via PlayerManager on the server
+            boolean isOp = world.getServer() != null && world.getServer().getPlayerManager().isOperator(player.getGameProfile());
             boolean canRemove = ownable.isOwnedBy(player) || player.isCreative() || isOp;
 
             if (canRemove) {
