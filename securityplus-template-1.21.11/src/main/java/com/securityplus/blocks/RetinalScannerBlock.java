@@ -1,7 +1,6 @@
 package com.securityplus.blocks;
 
 import com.securityplus.blockentity.OwnableBlockEntity;
-import com.securityplus.init.ModBlockEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -38,7 +37,7 @@ public class RetinalScannerBlock extends Block implements BlockEntityProvider {
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new OwnableBlockEntity(ModBlockEntities.OWNABLE_BLOCK_ENTITY, pos, state);
+        return new OwnableBlockEntity(pos, state);
     }
 
     @Override
@@ -57,7 +56,7 @@ public class RetinalScannerBlock extends Block implements BlockEntityProvider {
         if (!world.isClient() && placer instanceof PlayerEntity player) {
             BlockEntity be = world.getBlockEntity(pos);
             if (be instanceof OwnableBlockEntity ownable) {
-                ownable.setOwner(player.getUuid().toString(), player.getName().getString());
+                ownable.setOwner(player);
             }
         }
     }
@@ -77,7 +76,7 @@ public class RetinalScannerBlock extends Block implements BlockEntityProvider {
 
         if (be instanceof OwnableBlockEntity ownable) {
             Box box = new Box(pos).expand(3.0);
-            for (PlayerEntity player : world.getEntitiesOfClass(PlayerEntity.class, box)) {
+            for (PlayerEntity player : world.getEntitiesByClass(PlayerEntity.class, box, p -> true)) {
                 if (ownable.isOwnedBy(player)) {
                     ownerNearby = true;
                     ownerPlayer = player;
