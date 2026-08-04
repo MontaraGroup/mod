@@ -5,7 +5,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
@@ -25,7 +24,8 @@ public class UniversalBlockRemoverItem extends Item {
         if (!world.isClient() && player != null) {
             BlockEntity be = world.getBlockEntity(pos);
             if (be instanceof OwnableBlockEntity ownable) {
-                boolean canRemove = ownable.isOwnedBy(player) || player.isCreative() || (player instanceof ServerPlayerEntity serverPlayer && serverPlayer.getCommandSource().hasPermissionLevel(2));
+                boolean isOp = world.getServer() != null && world.getServer().getPermissionLevel(player.getGameProfile()) >= 2;
+                boolean canRemove = ownable.isOwnedBy(player) || player.isCreative() || isOp;
                 if (canRemove) {
                     world.breakBlock(pos, true, player);
                     player.sendMessage(Text.literal("§a[SECURITY] Block removed."), true);
