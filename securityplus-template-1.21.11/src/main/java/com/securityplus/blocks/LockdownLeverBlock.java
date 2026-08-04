@@ -57,12 +57,12 @@ public class LockdownLeverBlock extends Block implements BlockEntityProvider {
             if (be instanceof LockdownLeverBlockEntity lever) {
                 if (powered) {
                     lever.triggerLockdownOn(world, pos);
-                    world.playSound(null, pos, SoundEvents.ENTITY_END_PORTAL_SPAWN, SoundCategory.BLOCKS, 1.0F, 0.5F);
+                    world.playSound(null, pos, SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.BLOCKS, 1.0F, 0.5F);
                     player.sendMessage(Text.literal("§c§l[FACILITY LOCKDOWN ACTIVATED] §rRedstone self-broken!"), false);
                 } else {
-                   lever.triggerLockdownOff(world, pos);
-                   world.playSound(null, pos, SoundEvents.BLOCK_NOTE_BLOCK_BELL.value(), SoundCategory.BLOCKS, 1.0F, 1.2F);
-                   player.sendMessage(Text.literal("§a[Lockdown Deactivated] §rRedstone wires restored!"), false);
+                    lever.triggerLockdownOff(world, pos);
+                    world.playSound(null, pos, SoundEvents.BLOCK_NOTE_BLOCK_BELL.value(), SoundCategory.BLOCKS, 1.0F, 1.2F);
+                    player.sendMessage(Text.literal("§a[Lockdown Deactivated] §rRedstone wires restored!"), false);
                 }
             }
         }
