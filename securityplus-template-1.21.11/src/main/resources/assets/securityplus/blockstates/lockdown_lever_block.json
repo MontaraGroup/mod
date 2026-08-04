@@ -1,6 +1,10 @@
 {
   "variants": {
-    "powered=false": { "model": "minecraft:block/lever" },
-    "powered=true": { "model": "minecraft:block/lever_on" }
+    "powered=false": {
+      "model": "securityplus:block/lockdown_lever_block"
+    },
+    "powered=true": {
+      "model": "securityplus:block/lockdown_lever_block_powered"
+    }
   }
 }
