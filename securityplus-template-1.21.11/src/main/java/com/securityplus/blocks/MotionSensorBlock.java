@@ -54,7 +54,7 @@ public class MotionSensorBlock extends Block {
     @Override
     protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         Box box = new Box(pos).expand(5.0);
-        List<LivingEntity> entities = world.getEntitiesOfClass(LivingEntity.class, box);
+        List<LivingEntity> entities = world.getEntitiesByClass(LivingEntity.class, box, e -> true);
         boolean detected = !entities.isEmpty();
 
         if (state.get(POWERED) != detected) {
