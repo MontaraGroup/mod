@@ -25,7 +25,7 @@ public class LockdownDoorBlock extends Block {
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (!world.isClient) {
+        if (!world.isClient()) {
             boolean isPowered = world.isReceivingRedstonePower(pos);
             if (isPowered != state.get(POWERED)) {
                 world.setBlockState(pos, state.with(POWERED, isPowered).with(OPEN, isPowered), Block.NOTIFY_ALL);
