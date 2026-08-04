@@ -29,18 +29,16 @@ public class SentryTurretBlockEntity extends OwnableBlockEntity {
             if (blockEntity.cooldown > 0) {
                 --blockEntity.cooldown;
             } else {
-                double range = 10.0;
-                Box box = new Box(pos).expand(range);
-                List<LivingEntity> targets = world.getEntitiesOfClass(LivingEntity.class, box, (entity) -> {
+                Box box = new Box(pos).expand(10.0);
+                List<LivingEntity> targets = world.getEntitiesByClass(LivingEntity.class, box, (entity) -> {
                     if (!entity.isSpectator() && entity.isAlive()) {
                         if (entity instanceof PlayerEntity player) {
                             return !blockEntity.isOwnedBy(player);
                         } else {
                             return entity instanceof HostileEntity;
                         }
-                    } else {
-                        return false;
                     }
+                    return false;
                 });
                 if (!targets.isEmpty()) {
                     LivingEntity target = targets.get(0);
