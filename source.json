@@ -31,6 +31,47 @@
           "NSUserTrackingUsageDescription": "When you see an ad for our game, we would love to know about it! Please allow a 3rd party app to track when this happens!"
         }
       }
+    },
+    {
+      "name": "regram",
+      "bundleIdentifier": "com.burbn.instagram",
+      "developerName": "regram",
+      "subtitle": "regram",
+      "localizedDescription": "regram",
+      "localizedDescriptions": {
+        "en": "regram"
+      },
+      "iconURL": "",
+      "versions": [
+        {
+          "version": "445.0.0",
+          "buildVersion": "1053791553",
+          "date": "2026-09-18T17:44:22Z",
+          "downloadURL": "https://cdn.fouadraheb.com/storage/ipa/1788339843574-tvhcx/com.burbn.instagram_445.0.0_regram_6.1_sl.ipa",
+          "size": 328096839,
+          "minOSVersion": "16.3"
+        }
+      ],
+      "appPermissions": {
+        "entitlements": [],
+        "privacy": {
+          "NSBluetoothAlwaysUsageDescription": "This allows your phone to find and connect to the glasses using a Bluetooth connection.",
+          "NSCalendarsUsageDescription": "This will let Instagram sync events to your calendar.",
+          "NSCalendarsWriteOnlyAccessUsageDescription": "This will let Instagram sync events to your calendar.",
+          "NSCameraUsageDescription": "Instagram uses your device's camera to do things like help you take photos, record videos and use effects.",
+          "NSContactsUsageDescription": "Instagram will use your contacts to suggest people and things you care about, and offer a better service. Your contacts will be periodically synced and securely stored on Instagram’s servers.",
+          "NSFaceIDUsageDescription": "Enable Face ID for quick and secure authentication on Instagram.",
+          "NSFocusStatusUsageDescription": "This allows Instagram to check to see if you’ve been missing notifications from friends. You can always change this later in settings.",
+          "NSLocalNetworkUsageDescription": "Used to discover and connect to compatible streaming devices on your Wi-Fi network.",
+          "NSLocationAlwaysAndWhenInUseUsageDescription": "Instagram uses this to make some features work, personalize content and help people find places. You can change your preferences at any time in your device settings.",
+          "NSLocationUsageDescription": "Instagram uses this to make some features work, personalize content and help people find places. You can change your preferences at any time in your device settings.",
+          "NSLocationWhenInUseUsageDescription": "Instagram uses this to make some features work, personalize content and help people find places. You can change your preferences at any time in your device settings.",
+          "NSMicrophoneUsageDescription": "Instagram uses your device's microphone to do things like help you record videos and preview audio effects.",
+          "NSPhotoLibraryAddUsageDescription": "This lets you save photos and videos to your Camera Roll.",
+          "NSPhotoLibraryUsageDescription": "Instagram uses access to your camera roll to do things like help you share photos and videos to Instagram, apply effects and suggest photos and videos to share.",
+          "NSUserTrackingUsageDescription": "This helps Instagram personalize ads we show you."
+        }
+      }
     }
   ]
 }
