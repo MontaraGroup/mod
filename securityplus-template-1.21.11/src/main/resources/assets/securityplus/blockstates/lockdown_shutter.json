@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "powered=false": { "model": "minecraft:block/iron_bars_post" },
-    "powered=true": { "model": "minecraft:block/iron_block" }
-  }
-}
