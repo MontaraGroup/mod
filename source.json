@@ -1,0 +1,36 @@
+{
+  "name": "My Source",
+  "apps": [
+    {
+      "name": "monopoly",
+      "bundleIdentifier": "com.marmalade.monopoly",
+      "developerName": "Marcel",
+      "subtitle": "monopoly",
+      "localizedDescription": "monopoly",
+      "localizedDescriptions": {
+        "en": "monopoly"
+      },
+      "iconURL": "https://ipaomtk.com/wp-content/uploads/2024/09/monopoly-the-board-game-ipa-v1-15-8-everything-owned-appstore-icon.jpg",
+      "versions": [
+        {
+          "version": "1.15.15",
+          "buildVersion": "91",
+          "date": "2026-09-18T17:18:28Z",
+          "downloadURL": "https://file.ipaomtk.com/monopoly-the-board-game/MONOPOLY-The-Board-Game-IPAOMTK.COM.ipa",
+          "size": 680711912,
+          "minOSVersion": "15.2"
+        }
+      ],
+      "appPermissions": {
+        "entitlements": [],
+        "privacy": {
+          "NSCameraUsageDescription": "Camera permission needed to allow videochat",
+          "NSMicrophoneUsageDescription": "Microphone permission needed to capture audio for videochat",
+          "NSPhotoLibraryAddUsageDescription": "This App Can Save Screenshots To Your Photo Album For Sharing",
+          "NSPhotoLibraryUsageDescription": "This App Can Save Screenshots For Sharing",
+          "NSUserTrackingUsageDescription": "When you see an ad for our game, we would love to know about it! Please allow a 3rd party app to track when this happens!"
+        }
+      }
+    }
+  ]
+}
