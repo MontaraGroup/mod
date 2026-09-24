@@ -13,11 +13,12 @@
       "iconURL": "https://png.pngtree.com/png-vector/20221018/ourmid/pngtree-instagram-icon-png-image_6315974.png",
       "versions": [
         {
-          "version": "447",
-          "buildVersion": "1",
-          "date": "2026-09-24T20:06:52Z",
+          "version": "447.0.0",
+          "buildVersion": "1065993616",
+          "date": "2026-09-24T20:15:57Z",
           "downloadURL": "https://cdn.fouadraheb.com/storage/ipa/1790010075536-47oja/com.burbn.instagram_447.0.0_regram_6.2_sl.ipa",
-          "size": 0
+          "size": 323169265,
+          "minOSVersion": "16.3"
         }
       ],
       "appPermissions": {
