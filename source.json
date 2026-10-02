@@ -3,7 +3,7 @@
   "apps": [
     {
       "name": "regram",
-      "bundleIdentifier": "com.burbn.instagram.C7994853R4",
+      "bundleIdentifier": "com.burbn.instagram",
       "developerName": "regram",
       "subtitle": "regram",
       "localizedDescription": "regram",
